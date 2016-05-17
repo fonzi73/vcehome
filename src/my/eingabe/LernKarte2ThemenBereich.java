@@ -16,11 +16,12 @@ import java.sql.Statement;
  *
  * @author fonzi
  */
-public class LernKarte2ThemenBereich implements Saveable {
+public class LernKarte2ThemenBereich {
 
     private int id;
     private int lernKarte_id;
     private int themenBereich_id;
+    
 
     // Klassen zum Abfragen der Datenbank
     static Connection con = null;
@@ -28,6 +29,7 @@ public class LernKarte2ThemenBereich implements Saveable {
     static Statement st = null;
     static ResultSet rst = null;
 
+    
     public LernKarte2ThemenBereich(int lernKarte_id, int themenBereich_id) {
         this.lernKarte_id = lernKarte_id;
         this.themenBereich_id = themenBereich_id;
@@ -39,19 +41,37 @@ public class LernKarte2ThemenBereich implements Saveable {
         this.themenBereich_id = themenBereich_id;
     }
 
-    @Override // Verbindungsaufbau mit insert
-    public void insert() {
+    public int getId() {
+        return id;
+    }
+
+    public int getLernKarte_id() {
+        return lernKarte_id;
+    }
+
+    public int getThemenBereich_id() {
+        return themenBereich_id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    
+    
+     // Verbindungsaufbau mit insert
+    public static void insert(LernKarte2ThemenBereich lK2TB) {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
             pst = con.prepareStatement("INSERT INTO lernkarte2themenbereich VALUES (null, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS); // ID Ausgeben
-            pst.setInt(1, lernKarte_id);
-            pst.setInt(2, themenBereich_id);
+            pst.setInt(1, lK2TB.getLernKarte_id());
+            pst.setInt(2, lK2TB.getThemenBereich_id());
 
             pst.executeUpdate();
             rst = pst.getGeneratedKeys();
             while (rst.next()) {
                 //System.out.println(rst.getInt(1)); // Erste Spalte mit getInt(1) auslesen. PrimaryKey
-                id = rst.getInt(1); // Id in ArrayList übergeben
+              lK2TB.setId(rst.getInt(1)); // Id in ArrayList übergeben
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -73,7 +93,7 @@ public class LernKarte2ThemenBereich implements Saveable {
         }
     }
 
-    @Override
+    
     public void update() {
        try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
@@ -101,7 +121,7 @@ public class LernKarte2ThemenBereich implements Saveable {
         }
     }
 
-    @Override
+    
     public void delete(int id) {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
