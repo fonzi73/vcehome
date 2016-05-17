@@ -119,6 +119,12 @@ public class LernKarte {
             LernKarte2ThemenBereich lK2TB = new LernKarte2ThemenBereich(lK.getId(), tB.getId());
             LernKarte2ThemenBereich.insert(lK2TB);
         } 
+        
+            // Zugehörige PotentielleAntwort speichern
+        for (PotentielleAntwort pA  : lK.getpAs()) {
+            pA = new PotentielleAntwort(pA.getAntwort(), pA.isRichtigkeit(), lK.getId());
+            PotentielleAntwort.insert(pA);
+        }
             
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

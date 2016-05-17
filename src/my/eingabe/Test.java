@@ -17,15 +17,27 @@ public class Test {
         //LernKarte2ThemenBereich lK2TB = new LernKarte2ThemenBereich(1, 1);
         //LernKarte2ThemenBereich.insert(lK2TB);
         
+//        // Teste PotentielleAntwort.insert()
+//        PotentielleAntwort pA = new PotentielleAntwort("Raum 5.2", true, 1);
+//        PotentielleAntwort.insert(pA);
+//        
         // Teste Lernkarte ohne Arrays
-        LernKarte lK = new LernKarte("Wo bin ich?", 1);
+        LernKarte lK = new LernKarte("Wie spät?", 1);
         // Teste Lernkarte mit Themenbereich ArrayList
         ArrayList<ThemenBereich> tBs =  new ArrayList<>();
-        tBs.add(new ThemenBereich(1, "Java basics"));
-        tBs.add(new ThemenBereich(2, "blabla"));
+        tBs.add(new ThemenBereich(1, "Java advanced"));
+        tBs.add(new ThemenBereich(2, "kennste nich?"));
         lK.settBs(tBs);
+      
+        
+        // zusätzlich Testen Lernkarte mit POtentiellenAntwort ArraysList
+        ArrayList<PotentielleAntwort> pAs =  new ArrayList<>();
+        pAs.add(new PotentielleAntwort("Raum 5.2", true));
+        pAs.add(new PotentielleAntwort("Gebäude" , false));
+        lK.setpAs(pAs);
         // Methode Testen
         LernKarte.insert(lK);
+
         
     }
 }
