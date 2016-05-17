@@ -5,6 +5,8 @@
  */
 package my.eingabe;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author fonzi
@@ -12,8 +14,18 @@ package my.eingabe;
 public class Test {
     public static void main(String[] args) {
         // Teste LernKarte2ThemenBereich.insert()
-        LernKarte2ThemenBereich lK2TB = new LernKarte2ThemenBereich(1, 1);
-        LernKarte2ThemenBereich.insert(lK2TB);
+        //LernKarte2ThemenBereich lK2TB = new LernKarte2ThemenBereich(1, 1);
+        //LernKarte2ThemenBereich.insert(lK2TB);
+        
+        // Teste Lernkarte ohne Arrays
+        LernKarte lK = new LernKarte("Wo bin ich?", 1);
+        // Teste Lernkarte mit Themenbereich ArrayList
+        ArrayList<ThemenBereich> tBs =  new ArrayList<>();
+        tBs.add(new ThemenBereich(1, "Java basics"));
+        tBs.add(new ThemenBereich(2, "blabla"));
+        lK.settBs(tBs);
+        // Methode Testen
+        LernKarte.insert(lK);
         
     }
 }
