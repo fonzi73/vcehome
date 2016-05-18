@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import static my.eingabe.LernKarte.con;
 import static my.eingabe.LernKarte2ThemenBereich.con;
 
@@ -31,6 +32,14 @@ public class PotentielleAntwort {
     static Statement st = null;
     static ResultSet rst = null;
 
+    public PotentielleAntwort(int id, String antwort, boolean richtigkeit, int lernKarte_id) {
+        this.id = id;
+        this.antwort = antwort;
+        this.richtigkeit = richtigkeit;
+        this.lernKarte_id = lernKarte_id;
+    }
+
+    
     public PotentielleAntwort(String antwort, boolean richtigkeit, int lernKarte_id) {
         this.antwort = antwort;
         this.richtigkeit = richtigkeit;
@@ -67,6 +76,44 @@ public class PotentielleAntwort {
         this.id = id;
     }
 
+    @Override
+    public String toString() {
+        return "PotentielleAntwort{" + "id=" + id + ", antwort=" + antwort + ", richtigkeit=" + richtigkeit + ", lernKarte_id=" + lernKarte_id + '}';
+    }
+
+   
+
+     public static ArrayList<PotentielleAntwort> getAllByLernkarte_Id(int lernkarte_id) {
+        ArrayList<PotentielleAntwort> pAs = new ArrayList<>();
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
+            String sql = "SELECT * FROM potentielleantwort WHERE lernkarte_id=" + lernkarte_id;
+            st = con.createStatement();
+            rst = st.executeQuery(sql);
+            while (rst.next()) { // rst.next bewirkt ein Stop wen keine weiteren Datensätze vorhanden sind
+                PotentielleAntwort pA = new PotentielleAntwort(rst.getInt("id"), rst.getString("antwort"),
+                        rst.getBoolean("richtigkeit"), rst.getInt("lernkarte_id"));
+                pAs.add(pA);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+                if (rst != null) {
+                    rst.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        return pAs;
+    }
     public static void insert(PotentielleAntwort pA) {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
@@ -128,4 +175,5 @@ public class PotentielleAntwort {
             }
         }
     }
+
 }

@@ -5,6 +5,7 @@
  */
 package my.eingabe;
 
+import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -99,6 +100,43 @@ public class LernKarte {
         this.pAs = pAs;
     }
 
+    @Override
+    public String toString() {
+        return "LernKarte{" + "id=" + id + ", frage=" + frage + ", schwierigkeitsgrad=" + schwierigkeitsgrad + '}';
+    }
+
+    public static ArrayList<LernKarte> getAll() {
+        ArrayList<LernKarte> lKs = new ArrayList<>();
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
+            String sql = "SELECT * FROM lernkarte";
+            st = con.createStatement();
+            rst = st.executeQuery(sql);
+            while (rst.next()) { // rst.next bewirkt ein Stop wen keine weiteren Datensätze vorhanden sind
+                LernKarte lK = new LernKarte(rst.getInt("id"), rst.getString("frage"),
+                        rst.getInt("schwierigkeitsgrad"));
+                lKs.add(lK);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+                if (rst != null) {
+                    rst.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        return lKs;
+    }
+
     public static void insert(LernKarte lK) {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
@@ -175,4 +213,45 @@ public class LernKarte {
         }
     }
 
+    public static void updaten(LernKarte lK) {
+        // Verbindung zu MySQL
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
+            // Prepared Statement
+            String sql = "UPDATE lernkarte SET frage=?, schwierigkeitsgrad=? WHERE id=?";
+            pst = con.prepareStatement(sql);
+            // Übernimmt werte aus dem GUI
+            pst.setString(1, lK.getFrage());
+            pst.setInt(2, lK.getSchwierigkeitsgrad());
+            pst.setInt(3, lK.id);
+            pst.executeUpdate();
+            PotentielleAntwort.delete(lK.getpAs().get(0));
+            for (PotentielleAntwort pA : lK.getpAs()) {
+                PotentielleAntwort.insert(pA);
+            }
+            
+            for (ThemenBereich tB : lK.gettBs()) {
+                LernKarte2ThemenBereich lK2TB = new LernKarte2ThemenBereich(lK.getId(), tB.getId());
+                LernKarte2ThemenBereich.delete(lK2TB);
+            }
+            for (ThemenBereich tB : lK.gettBs()) {
+                LernKarte2ThemenBereich lK2TB = new LernKarte2ThemenBereich(lK.getId(), tB.getId());
+                LernKarte2ThemenBereich.insert(lK2TB);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage()); // Output Meldung wenn Fehler
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+                if (pst != null) {
+                    pst.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+    }
 }

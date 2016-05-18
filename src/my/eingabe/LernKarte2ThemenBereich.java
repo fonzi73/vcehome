@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import static my.eingabe.PotentielleAntwort.con;
 
 /**
  *
@@ -21,7 +23,6 @@ public class LernKarte2ThemenBereich {
     private int id;
     private int lernKarte_id;
     private int themenBereich_id;
-    
 
     // Klassen zum Abfragen der Datenbank
     static Connection con = null;
@@ -29,7 +30,6 @@ public class LernKarte2ThemenBereich {
     static Statement st = null;
     static ResultSet rst = null;
 
-    
     public LernKarte2ThemenBereich(int lernKarte_id, int themenBereich_id) {
         this.lernKarte_id = lernKarte_id;
         this.themenBereich_id = themenBereich_id;
@@ -56,10 +56,45 @@ public class LernKarte2ThemenBereich {
     public void setId(int id) {
         this.id = id;
     }
-    
-    
-    
-     // Verbindungsaufbau mit insert
+
+    @Override
+    public String toString() {
+        return "LernKarte2ThemenBereich{" + "id=" + id + ", lernKarte_id=" + lernKarte_id + ", themenBereich_id=" + themenBereich_id + '}';
+    }
+
+    public static ArrayList<LernKarte2ThemenBereich> getAllByLernkarte_Id(int lernkarte_id) {
+        ArrayList<LernKarte2ThemenBereich> lK2TBs = new ArrayList<>();
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
+            String sql = "SELECT * FROM lernkarte2themenbereich WHERE lernkarte_id=" + lernkarte_id;
+            st = con.createStatement();
+            rst = st.executeQuery(sql);
+            while (rst.next()) { // rst.next bewirkt ein Stop wen keine weiteren Datensätze vorhanden sind
+                LernKarte2ThemenBereich lK2TB = new LernKarte2ThemenBereich(rst.getInt("id"), rst.getInt("lernkarte_id"),
+                        rst.getInt("themenbereich_id"));
+                lK2TBs.add(lK2TB);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+                if (rst != null) {
+                    rst.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        return lK2TBs;
+    }
+
+    // Verbindungsaufbau mit insert
     public static void insert(LernKarte2ThemenBereich lK2TB) {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
@@ -71,7 +106,7 @@ public class LernKarte2ThemenBereich {
             rst = pst.getGeneratedKeys();
             while (rst.next()) {
                 //System.out.println(rst.getInt(1)); // Erste Spalte mit getInt(1) auslesen. PrimaryKey
-              lK2TB.setId(rst.getInt(1)); // Id in ArrayList übergeben
+                lK2TB.setId(rst.getInt(1)); // Id in ArrayList übergeben
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -93,9 +128,8 @@ public class LernKarte2ThemenBereich {
         }
     }
 
-    
     public void update() {
-       try {
+        try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
             // Prepared Statement
             String sql = "UPDATE lernkarte2themenbereich SET lernkarte_id=?, themenbereich_id=? WHERE id=?";
@@ -121,7 +155,6 @@ public class LernKarte2ThemenBereich {
         }
     }
 
-    
     public static void delete(LernKarte2ThemenBereich lK2TB) {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
