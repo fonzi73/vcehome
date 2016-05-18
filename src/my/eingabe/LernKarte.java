@@ -19,12 +19,13 @@ import static my.eingabe.LernKarte2ThemenBereich.con;
  * @author fonzi
  */
 public class LernKarte {
+
     private int id;
     private String frage;
     private int schwierigkeitsgrad;
     private ArrayList<ThemenBereich> tBs = null;
     private ArrayList<PotentielleAntwort> pAs = null;
-    
+
     // Klassen zum Abfragen der Datenbank
     static Connection con = null;
     static PreparedStatement pst = null;
@@ -97,9 +98,7 @@ public class LernKarte {
     public void setpAs(ArrayList<PotentielleAntwort> pAs) {
         this.pAs = pAs;
     }
-    
-    
-    
+
     public static void insert(LernKarte lK) {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
@@ -111,21 +110,21 @@ public class LernKarte {
             rst = pst.getGeneratedKeys();
             while (rst.next()) {
                 //System.out.println(rst.getInt(1)); // Erste Spalte mit getInt(1) auslesen. PrimaryKey
-              lK.setId(rst.getInt(1)); // Id in ArrayList übergeben
+                lK.setId(rst.getInt(1)); // Id in ArrayList übergeben
             }
-            
+
             // Zugehörigkeit zu Themenbereichen speichern
-        for (ThemenBereich tB  : lK.gettBs()) {
-            LernKarte2ThemenBereich lK2TB = new LernKarte2ThemenBereich(lK.getId(), tB.getId());
-            LernKarte2ThemenBereich.insert(lK2TB);
-        } 
-        
+            for (ThemenBereich tB : lK.gettBs()) {
+                LernKarte2ThemenBereich lK2TB = new LernKarte2ThemenBereich(lK.getId(), tB.getId());
+                LernKarte2ThemenBereich.insert(lK2TB);
+            }
+
             // Zugehörige PotentielleAntwort speichern
-        for (PotentielleAntwort pA  : lK.getpAs()) {
-            pA = new PotentielleAntwort(pA.getAntwort(), pA.isRichtigkeit(), lK.getId());
-            PotentielleAntwort.insert(pA);
-        }
-            
+            for (PotentielleAntwort pA : lK.getpAs()) {
+                pA = new PotentielleAntwort(pA.getAntwort(), pA.isRichtigkeit(), lK.getId());
+                PotentielleAntwort.insert(pA);
+            }
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             // ex.printStackTrace(); // Java Meldung
@@ -144,7 +143,36 @@ public class LernKarte {
                 System.out.println(ex.getMessage());
             }
         }
-        
-        
     }
+
+    public static void delete(LernKarte lK) {
+        LernKarte2ThemenBereich lK2TB = new LernKarte2ThemenBereich(lK.getId(), 0);
+        LernKarte2ThemenBereich.delete(lK2TB);
+        PotentielleAntwort pA = new PotentielleAntwort("", true, lK.getId());
+        PotentielleAntwort.delete(pA);
+
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
+            // Prepared Statement
+            String sql = "DELETE FROM lernkarte WHERE id=?";
+            pst = con.prepareStatement(sql);
+            // Übernimmt werte aus dem GUI
+            pst.setInt(1, lK.getId());
+            pst.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage()); // Output Meldung wenn Fehler
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+                if (pst != null) {
+                    pst.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+    }
+
 }

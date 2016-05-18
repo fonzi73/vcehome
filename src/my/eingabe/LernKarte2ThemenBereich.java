@@ -122,14 +122,14 @@ public class LernKarte2ThemenBereich {
     }
 
     
-    public void delete(int id) {
+    public static void delete(LernKarte2ThemenBereich lK2TB) {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
             // Prepared Statement
-            String sql = "DELETE FROM lernkarte2themenbereich WHERE id=?";
+            String sql = "DELETE FROM lernkarte2themenbereich WHERE lernkarte_id=?";
             pst = con.prepareStatement(sql);
             // Übernimmt werte aus dem GUI
-            pst.setInt(1, id);
+            pst.setInt(1, lK2TB.getLernKarte_id());
             pst.executeUpdate();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage()); // Output Meldung wenn Fehler
