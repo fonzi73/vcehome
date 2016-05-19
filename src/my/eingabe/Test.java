@@ -46,19 +46,42 @@ public class Test {
 ////        LernKarte.delete(lk);
 ////        System.out.println(LernKarte2ThemenBereich.getAllByLernkarte_Id(1).toString());
 //
+//
+//           LernKarte lernkarte = new LernKarte(1, "was jjjjj geht?", 10);
+//           ArrayList<ThemenBereich> themen = new ArrayList<>();
+//           themen.add(new ThemenBereich(1, "Java basics"));
+//           themen.add(new ThemenBereich(4, "Flow Control"));
+//           lernkarte.settBs(themen);
+//           ArrayList<PotentielleAntwort> pAs = new ArrayList<>();
+//           pAs.add(new PotentielleAntwort("7777", true, 1));
+//           pAs.add(new PotentielleAntwort("4444", false, 1));
+//           lernkarte.setpAs(pAs);
+//           lernkarte.updaten(lernkarte);
+//        // ArrayList befehle Testen
+//        Sitzung s = new Sitzung();
+//        System.out.println(s.getAktuelleLernKarte());
+//        System.out.println(s.getNextLernKarte());
+//        System.out.println(s.getPrevLernKarte());
+//        System.out.println(s.getPrevLernKarte());
+        Sitzung s = new Sitzung();
+        ArrayList<LernKarte> lernkarten = new ArrayList<>();
+        LernKarte lernkarte = new LernKarte(5, "", 1);
 
-
-
-           LernKarte lernkarte = new LernKarte(1, "was jjjjj geht?", 10);
-           ArrayList<ThemenBereich> themen = new ArrayList<>();
-           themen.add(new ThemenBereich(1, "Java basics"));
-           themen.add(new ThemenBereich(4, "Flow Control"));
-           lernkarte.settBs(themen);
-           ArrayList<PotentielleAntwort> pAs = new ArrayList<>();
-           pAs.add(new PotentielleAntwort("7777", true, 1));
-           pAs.add(new PotentielleAntwort("4444", false, 1));
-           lernkarte.setpAs(pAs);
-           lernkarte.updaten(lernkarte);
+//        ArrayList<ThemenBereich> themen = new ArrayList<>();
+//        themen.add(new ThemenBereich(1, "Java basics"));
+//        themen.add(new ThemenBereich(2, "Flow Control"));
+//        lernkarte.settBs(themen);
+//        
+//        ArrayList<PotentielleAntwort> pAs = new ArrayList<>();
+//        pAs.add(new PotentielleAntwort("666", true, 4));
+//        pAs.add(new PotentielleAntwort("333", false, 4));
+//        lernkarte.setpAs(pAs);
+        
+        //s.addLernKarte(lernkarte);
+        s.removeLernKarte(lernkarte);
+        System.out.println(s.getAktuelleLernKarte());
+        System.out.println(s.getPrevLernKarte());
+        
 
     }
 }

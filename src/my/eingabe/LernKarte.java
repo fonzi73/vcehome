@@ -102,9 +102,10 @@ public class LernKarte {
 
     @Override
     public String toString() {
-        return "LernKarte{" + "id=" + id + ", frage=" + frage + ", schwierigkeitsgrad=" + schwierigkeitsgrad + '}';
+        return "LernKarte{" + "id=" + id + ", frage=" + frage + ", schwierigkeitsgrad=" + schwierigkeitsgrad + ", tBs=" + tBs + ", pAs=" + pAs + '}';
     }
-    
+
+   
     /*
     getAll
     */

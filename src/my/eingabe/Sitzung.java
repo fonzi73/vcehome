@@ -30,15 +30,19 @@ public class Sitzung {
     }
 
     public void setAktuelleLernKarte(LernKarte lK) {
+        lK.updaten(lK);
         lKs.set(aktuellerLKIndex, lK);
     }
 
     public void addLernKarte(LernKarte lK) {
+        lK.insert(lK);
         lKs.add(lK);
     }
 
     public void removeLernKarte(LernKarte lK) {
         lKs.remove(lK);
+        lK.delete(lK);
+        lKs = LernKarte.getAll();
     }
 
     // Schritt nach vorne

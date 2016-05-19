@@ -45,7 +45,7 @@ public class ThemenBereich {
         ThemenBereich tB = null;
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
-            String sql = "SELCT * FROM themenbereich WHERE id=?";
+            String sql = "SELECT * FROM themenbereich WHERE id=?";
             pst = con.prepareStatement(sql);
             pst.setInt(1, id);
             pst.executeQuery();
@@ -71,6 +71,11 @@ public class ThemenBereich {
             }
         }
         return tB;
+    }
+
+    @Override
+    public String toString() {
+        return "ThemenBereich{" + "id=" + id + ", bezeichnung=" + bezeichnung + '}';
     }
 
 }
