@@ -134,58 +134,6 @@ public class LernKarte2ThemenBereich {
         }
     }
 
-    public void update() {
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
-            // Prepared Statement
-            String sql = "UPDATE lernkarte2themenbereich SET lernkarte_id=?, themenbereich_id=? WHERE id=?";
-            pst = con.prepareStatement(sql);
-            // Übernimmt werte aus dem GUI
-            pst.setInt(1, lernKarte_id);
-            pst.setInt(2, themenBereich_id);
-            pst.setInt(3, id);
-            pst.executeUpdate();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage()); // Output Meldung wenn Fehler
-        } finally {
-            try {
-                if (con != null) {
-                    con.close();
-                }
-                if (pst != null) {
-                    pst.close();
-                }
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
-        }
-    }
-
-    public static void delete(LernKarte2ThemenBereich lK2TB) {
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
-            // Prepared Statement
-            String sql = "DELETE FROM lernkarte2themenbereich WHERE lernkarte_id=?";
-            pst = con.prepareStatement(sql);
-            // Übernimmt werte aus dem GUI
-            pst.setInt(1, lK2TB.getLernKarte_id());
-            pst.executeUpdate();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage()); // Output Meldung wenn Fehler
-        } finally {
-            try {
-                if (con != null) {
-                    con.close();
-                }
-                if (pst != null) {
-                    pst.close();
-                }
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
-        }
-    }
-
     public static void delete(LernKarte lK) {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");

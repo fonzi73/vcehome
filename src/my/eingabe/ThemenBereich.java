@@ -57,23 +57,20 @@ public class ThemenBereich {
             System.out.println(ex.getMessage());
         } finally {
             try {
-            if (con != null) {
-                con.close();
+                if (con != null) {
+                    con.close();
+                }
+                if (pst != null) {
+                    pst.close();
+                }
+                if (rst != null) {
+                    rst.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
             }
-            if (pst != null) {
-                pst.close();
-            }
-            if (rst != null) {
-                rst.close();
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
         }
+        return tB;
     }
-    return tB ;
-}
 
-}
-    
-          
 }

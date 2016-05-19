@@ -242,17 +242,14 @@ public class LernKarte {
             pst.setInt(3, lK.id);
             pst.executeUpdate();
             // PotentielleAntworten löschen
-            PotentielleAntwort.delete(lK.getpAs().get(0));
+            PotentielleAntwort.delete(lK);
             // neue PotentielleAntworten speichern
             for (PotentielleAntwort pA : lK.getpAs()) {
                 PotentielleAntwort.insert(pA);
             }
             // Themenbereiche in LernKarte2ThemenBereich löschen
-            for (ThemenBereich tB : lK.gettBs()) {
-                LernKarte2ThemenBereich lK2TB = new LernKarte2ThemenBereich(lK.getId(), tB.getId());
-                LernKarte2ThemenBereich.delete(lK2TB);
-            }
-            // Themenbereiche in LernKarte2ThemenBereich speichern
+            LernKarte2ThemenBereich.delete(lK);
+           // Themenbereiche in LernKarte2ThemenBereich speichern
             for (ThemenBereich tB : lK.gettBs()) {
                 LernKarte2ThemenBereich lK2TB = new LernKarte2ThemenBereich(lK.getId(), tB.getId());
                 LernKarte2ThemenBereich.insert(lK2TB);
