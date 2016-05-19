@@ -104,7 +104,11 @@ public class LernKarte {
     public String toString() {
         return "LernKarte{" + "id=" + id + ", frage=" + frage + ", schwierigkeitsgrad=" + schwierigkeitsgrad + '}';
     }
-
+    
+    /*
+    getAll
+    */
+    
     public static ArrayList<LernKarte> getAll() {
         ArrayList<LernKarte> lKs = new ArrayList<>();
         try {
@@ -137,6 +141,9 @@ public class LernKarte {
         return lKs;
     }
 
+    /*
+    insert
+    */
     public static void insert(LernKarte lK) {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
@@ -183,13 +190,13 @@ public class LernKarte {
         }
     }
 
+    /*
+    delete
+    */
     public static void delete(LernKarte lK) {
-        LernKarte2ThemenBereich lK2TB = new LernKarte2ThemenBereich(lK.getId(), 0);
-        LernKarte2ThemenBereich.delete(lK2TB);
-        PotentielleAntwort pA = new PotentielleAntwort("", true, lK.getId());
-        PotentielleAntwort.delete(pA);
-
         try {
+            PotentielleAntwort.delete(lK);
+            LernKarte2ThemenBereich.delete(lK);            
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
             // Prepared Statement
             String sql = "DELETE FROM lernkarte WHERE id=?";
@@ -213,6 +220,9 @@ public class LernKarte {
         }
     }
 
+    /*
+    updaten
+    */
     public static void updaten(LernKarte lK) {
         // Verbindung zu MySQL
         try {
@@ -225,15 +235,18 @@ public class LernKarte {
             pst.setInt(2, lK.getSchwierigkeitsgrad());
             pst.setInt(3, lK.id);
             pst.executeUpdate();
+            // PotentielleAntworten löschen
             PotentielleAntwort.delete(lK.getpAs().get(0));
+            // neue PotentielleAntworten speichern
             for (PotentielleAntwort pA : lK.getpAs()) {
                 PotentielleAntwort.insert(pA);
             }
-            
+            // Themenbereiche in LernKarte2ThemenBereich löschen
             for (ThemenBereich tB : lK.gettBs()) {
                 LernKarte2ThemenBereich lK2TB = new LernKarte2ThemenBereich(lK.getId(), tB.getId());
                 LernKarte2ThemenBereich.delete(lK2TB);
             }
+            // Themenbereiche in LernKarte2ThemenBereich speichern
             for (ThemenBereich tB : lK.gettBs()) {
                 LernKarte2ThemenBereich lK2TB = new LernKarte2ThemenBereich(lK.getId(), tB.getId());
                 LernKarte2ThemenBereich.insert(lK2TB);

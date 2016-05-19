@@ -150,7 +150,9 @@ public class PotentielleAntwort {
         
         
     }
-    
+    /*
+    delete
+    */
     public static void delete(PotentielleAntwort pA) {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
@@ -159,6 +161,31 @@ public class PotentielleAntwort {
             pst = con.prepareStatement(sql);
             // Übernimmt werte aus dem GUI
             pst.setInt(1, pA.getLernKarte_id()) ;
+            pst.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage()); // Output Meldung wenn Fehler
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+                if (pst != null) {
+                    pst.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+    }
+    
+    public static void delete(LernKarte lK) {
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
+            // Prepared Statement
+            String sql = "DELETE FROM potentielleantwort WHERE lernkarte_id=?";
+            pst = con.prepareStatement(sql);
+            // Übernimmt werte aus dem GUI
+            pst.setInt(1, lK.getId()) ;
             pst.executeUpdate();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage()); // Output Meldung wenn Fehler
