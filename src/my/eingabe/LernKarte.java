@@ -121,6 +121,12 @@ public class LernKarte {
                         rst.getInt("schwierigkeitsgrad"));
                 lKs.add(lK);
             }
+            // für jede LernKarte alle zugehörigen potentiellenAntwort hinzufügen
+            for (LernKarte lK : lKs) {
+                lK.setpAs(PotentielleAntwort.getAllByLernkarte(lK));
+                lK.settBs(LernKarte2ThemenBereich.getAllThemenByLernKarte(lK));
+            }
+            
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         } finally {

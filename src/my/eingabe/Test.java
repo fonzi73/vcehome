@@ -49,14 +49,14 @@ public class Test {
 
 
 
-           LernKarte lernkarte = new LernKarte(1, "nochmal hier testen", 10);
+           LernKarte lernkarte = new LernKarte(1, "was geht?", 10);
            ArrayList<ThemenBereich> themen = new ArrayList<>();
            themen.add(new ThemenBereich(2, "Java basics"));
            themen.add(new ThemenBereich(3, "Flow Control"));
            lernkarte.settBs(themen);
            ArrayList<PotentielleAntwort> pAs = new ArrayList<>();
-           pAs.add(new PotentielleAntwort("414", true, 1));
-           pAs.add(new PotentielleAntwort("515", false, 1));
+           pAs.add(new PotentielleAntwort("4124", true, 1));
+           pAs.add(new PotentielleAntwort("5125", false, 1));
            lernkarte.setpAs(pAs);
            lernkarte.updaten(lernkarte);
 

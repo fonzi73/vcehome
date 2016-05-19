@@ -83,16 +83,20 @@ public class PotentielleAntwort {
 
    
 
-     public static ArrayList<PotentielleAntwort> getAllByLernkarte_Id(int lernkarte_id) {
+     public static ArrayList<PotentielleAntwort> getAllByLernkarte(LernKarte lK) {
         ArrayList<PotentielleAntwort> pAs = new ArrayList<>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
-            String sql = "SELECT * FROM potentielleantwort WHERE lernkarte_id=" + lernkarte_id;
-            st = con.createStatement();
-            rst = st.executeQuery(sql);
+            String sql = "SELECT * FROM potentielleantwort WHERE lernkarte_id=?";
+            pst = con.prepareStatement(sql);
+            pst.setInt(1, lK.getId());
+            rst = pst.executeQuery();
             while (rst.next()) { // rst.next bewirkt ein Stop wen keine weiteren Datensätze vorhanden sind
-                PotentielleAntwort pA = new PotentielleAntwort(rst.getInt("id"), rst.getString("antwort"),
-                        rst.getBoolean("richtigkeit"), rst.getInt("lernkarte_id"));
+                PotentielleAntwort pA = new PotentielleAntwort(
+                        rst.getInt("id"), 
+                        rst.getString("antwort"), 
+                        Boolean.parseBoolean(rst.getString("richtigkeit")), 
+                        rst.getInt("lernkarte_id"));
                 pAs.add(pA);
             }
         } catch (SQLException ex) {
@@ -102,8 +106,8 @@ public class PotentielleAntwort {
                 if (con != null) {
                     con.close();
                 }
-                if (st != null) {
-                    st.close();
+                if (pst != null) {
+                    pst.close();
                 }
                 if (rst != null) {
                     rst.close();

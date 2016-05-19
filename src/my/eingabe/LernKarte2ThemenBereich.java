@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import static my.eingabe.PotentielleAntwort.con;
+import static my.eingabe.PotentielleAntwort.pst;
 
 /**
  *
@@ -62,17 +63,23 @@ public class LernKarte2ThemenBereich {
         return "LernKarte2ThemenBereich{" + "id=" + id + ", lernKarte_id=" + lernKarte_id + ", themenBereich_id=" + themenBereich_id + '}';
     }
 
-    public static ArrayList<LernKarte2ThemenBereich> getAllByLernkarte_Id(int lernkarte_id) {
-        ArrayList<LernKarte2ThemenBereich> lK2TBs = new ArrayList<>();
+    public static ArrayList<ThemenBereich> getAllThemenByLernKarte(LernKarte lK) {
+        ArrayList<ThemenBereich> tBs = new ArrayList<>();
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
-            String sql = "SELECT * FROM lernkarte2themenbereich WHERE lernkarte_id=" + lernkarte_id;
-            st = con.createStatement();
-            rst = st.executeQuery(sql);
+            String sql = "SELECT * FROM lernkarte2themenbereich WHERE lernkarte_id=?";
+            pst = con.prepareStatement(sql);
+            pst.setInt(1, lK.getId());
+            pst.executeQuery();
+            rst = pst.getResultSet();
+            ArrayList<Integer> tBIds = new ArrayList<>();
+            // alle themenbereich_ids auslesen
             while (rst.next()) { // rst.next bewirkt ein Stop wen keine weiteren Datensätze vorhanden sind
-                LernKarte2ThemenBereich lK2TB = new LernKarte2ThemenBereich(rst.getInt("id"), rst.getInt("lernkarte_id"),
-                        rst.getInt("themenbereich_id"));
-                lK2TBs.add(lK2TB);
+                tBIds.add(rst.getInt("themenbereich_id"));
+            }
+            // zugehörige ThemenBereich-Objekte erstellen und zur ArrayList hinzufügen
+            for (Integer tBId : tBIds) {
+                tBs.add(ThemenBereich.getById(tBId));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -81,8 +88,8 @@ public class LernKarte2ThemenBereich {
                 if (con != null) {
                     con.close();
                 }
-                if (st != null) {
-                    st.close();
+                if (pst != null) {
+                    pst.close();
                 }
                 if (rst != null) {
                     rst.close();
@@ -91,7 +98,7 @@ public class LernKarte2ThemenBereich {
                 System.out.println(ex.getMessage());
             }
         }
-        return lK2TBs;
+        return tBs;
     }
 
     public static void insert(LernKarte2ThemenBereich lK2TB) {
