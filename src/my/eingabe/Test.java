@@ -63,24 +63,27 @@ public class Test {
 //        System.out.println(s.getNextLernKarte());
 //        System.out.println(s.getPrevLernKarte());
 //        System.out.println(s.getPrevLernKarte());
-        Sitzung s = new Sitzung();
-        ArrayList<LernKarte> lernkarten = new ArrayList<>();
-        LernKarte lernkarte = new LernKarte(5, "", 1);
-
-//        ArrayList<ThemenBereich> themen = new ArrayList<>();
-//        themen.add(new ThemenBereich(1, "Java basics"));
-//        themen.add(new ThemenBereich(2, "Flow Control"));
-//        lernkarte.settBs(themen);
+//        Sitzung s = new Sitzung();
+//        ArrayList<LernKarte> lernkarten = new ArrayList<>();
+//        LernKarte lernkarte = new LernKarte(5, "", 1);
+//
+////        ArrayList<ThemenBereich> themen = new ArrayList<>();
+////        themen.add(new ThemenBereich(1, "Java basics"));
+////        themen.add(new ThemenBereich(2, "Flow Control"));
+////        lernkarte.settBs(themen);
+////        
+////        ArrayList<PotentielleAntwort> pAs = new ArrayList<>();
+////        pAs.add(new PotentielleAntwort("666", true, 4));
+////        pAs.add(new PotentielleAntwort("333", false, 4));
+////        lernkarte.setpAs(pAs);
 //        
-//        ArrayList<PotentielleAntwort> pAs = new ArrayList<>();
-//        pAs.add(new PotentielleAntwort("666", true, 4));
-//        pAs.add(new PotentielleAntwort("333", false, 4));
-//        lernkarte.setpAs(pAs);
+//        //s.addLernKarte(lernkarte);
+//        s.removeLernKarte(lernkarte);
+//        System.out.println(s.getAktuelleLernKarte());
+//        System.out.println(s.getPrevLernKarte());
         
-        //s.addLernKarte(lernkarte);
-        s.removeLernKarte(lernkarte);
-        System.out.println(s.getAktuelleLernKarte());
-        System.out.println(s.getPrevLernKarte());
+           
+        
         
 
     }

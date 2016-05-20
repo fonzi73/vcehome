@@ -105,11 +105,9 @@ public class LernKarte {
         return "LernKarte{" + "id=" + id + ", frage=" + frage + ", schwierigkeitsgrad=" + schwierigkeitsgrad + ", tBs=" + tBs + ", pAs=" + pAs + '}';
     }
 
-   
     /*
     getAll
-    */
-    
+     */
     public static ArrayList<LernKarte> getAll() {
         ArrayList<LernKarte> lKs = new ArrayList<>();
         try {
@@ -127,7 +125,7 @@ public class LernKarte {
                 lK.setpAs(PotentielleAntwort.getAllByLernkarte(lK));
                 lK.settBs(LernKarte2ThemenBereich.getAllThemenByLernKarte(lK));
             }
-            
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         } finally {
@@ -150,7 +148,7 @@ public class LernKarte {
 
     /*
     insert
-    */
+     */
     public static void insert(LernKarte lK) {
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
@@ -199,11 +197,11 @@ public class LernKarte {
 
     /*
     delete
-    */
+     */
     public static void delete(LernKarte lK) {
         try {
             PotentielleAntwort.delete(lK);
-            LernKarte2ThemenBereich.delete(lK);            
+            LernKarte2ThemenBereich.delete(lK);
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
             // Prepared Statement
             String sql = "DELETE FROM lernkarte WHERE id=?";
@@ -229,7 +227,7 @@ public class LernKarte {
 
     /*
     updaten
-    */
+     */
     public static void updaten(LernKarte lK) {
         // Verbindung zu MySQL
         try {
@@ -250,7 +248,7 @@ public class LernKarte {
             }
             // Themenbereiche in LernKarte2ThemenBereich löschen
             LernKarte2ThemenBereich.delete(lK);
-           // Themenbereiche in LernKarte2ThemenBereich speichern
+            // Themenbereiche in LernKarte2ThemenBereich speichern
             for (ThemenBereich tB : lK.gettBs()) {
                 LernKarte2ThemenBereich lK2TB = new LernKarte2ThemenBereich(lK.getId(), tB.getId());
                 LernKarte2ThemenBereich.insert(lK2TB);
@@ -270,5 +268,34 @@ public class LernKarte {
                 System.out.println(ex.getMessage());
             }
         }
+    }
+
+    // GetByID
+    public static int getByID(int id) {
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
+            String sql = "SELECT * FROM lernkarte WHERE id=?";
+            pst = con.prepareStatement(sql);
+            // Übernimmt werte aus dem GUI
+            pst.setInt(1,id);
+            pst.executeQuery();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+                if (rst != null) {
+                    rst.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        return id;
     }
 }

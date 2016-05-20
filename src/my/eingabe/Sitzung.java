@@ -64,4 +64,5 @@ public class Sitzung {
         }
         return getAktuelleLernKarte();
     }
+    
 }
