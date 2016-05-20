@@ -271,7 +271,8 @@ public class LernKarte {
     }
 
     // GetByID
-    public static int getByID(int id) {
+    public static LernKarte getByID(int id) {
+        LernKarte lK = null;
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
             String sql = "SELECT * FROM lernkarte WHERE id=?";
@@ -279,6 +280,15 @@ public class LernKarte {
             // Übernimmt werte aus dem GUI
             pst.setInt(1,id);
             pst.executeQuery();
+            rst = pst.getResultSet();
+            while (rst.next()){
+                lK = new LernKarte(rst.getInt("id"),
+                rst.getString("frage"), rst.getInt("schwierigkeitsgrad"));
+            }
+            // für LernKarte alle zugehörigen potentielleAntwort hinzufügen
+            lK.setpAs(PotentielleAntwort.getAllByLernkarte(lK));
+            lK.settBs(LernKarte2ThemenBereich.getAllThemenByLernKarte(lK));
+            
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         } finally {
@@ -296,6 +306,6 @@ public class LernKarte {
                 System.out.println(ex.getMessage());
             }
         }
-        return id;
+        return lK;
     }
 }

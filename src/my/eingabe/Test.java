@@ -88,7 +88,7 @@ public class Test {
 //        System.out.println(s.getAktuelleLernKarte());
 //        System.out.println(s.getPrevLernKarte());
         
-           
+           System.out.println(LernKarte.getByID(3).toString());
         
         
 
