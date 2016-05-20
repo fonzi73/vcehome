@@ -14,6 +14,12 @@ import java.util.ArrayList;
 public class Test {
 
     public static void main(String[] args) {
+        
+        /**
+         * TestBranch erstellt zum Testen der Branch
+         */
+
+       
         // Teste LernKarte2ThemenBereich.insert()
 //        LernKarte2ThemenBereich lK2TB = new LernKarte2ThemenBereich(7, 0);
 //        //LernKarte2ThemenBereich.insert(lK2TB);
