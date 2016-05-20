@@ -29,20 +29,33 @@ public class Sitzung {
         return lKs.get(aktuellerLKIndex);
     }
 
+    public LernKarte geheZu(int id) {
+        for (LernKarte lK : lKs) {
+            if (lK.getId() == id) {
+                aktuellerLKIndex = lKs.indexOf(lK);
+                break;
+            }
+        }
+        return getAktuelleLernKarte();
+    }
+
     public void setAktuelleLernKarte(LernKarte lK) {
-        lK.updaten(lK);
         lKs.set(aktuellerLKIndex, lK);
+        LernKarte.updaten(lK);
     }
 
     public void addLernKarte(LernKarte lK) {
-        lK.insert(lK);
+        LernKarte.insert(lK);
         lKs.add(lK);
+        aktuellerLKIndex = lKs.size() - 1;
     }
 
-    public void removeLernKarte(LernKarte lK) {
-        lKs.remove(lK);
-        lK.delete(lK);
-        lKs = LernKarte.getAll();
+    public void removeLernKarte() {
+        LernKarte.delete(lKs.get(aktuellerLKIndex));
+        lKs.remove(lKs.get(aktuellerLKIndex));
+        if (aktuellerLKIndex == lKs.size()) {
+            aktuellerLKIndex = lKs.size() - 1;
+        }
     }
 
     // Schritt nach vorne
@@ -64,5 +77,5 @@ public class Sitzung {
         }
         return getAktuelleLernKarte();
     }
-    
+
 }
