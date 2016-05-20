@@ -16,6 +16,13 @@ public class Sitzung {
     private ArrayList<LernKarte> lKs = LernKarte.getAll();
     private int aktuellerLKIndex = 0;
 
+    @Override
+    public String toString() {
+        return "Sitzung{" + "lKs=" + lKs + ", aktuellerLKIndex=" + aktuellerLKIndex + '}';
+    }
+    
+    
+
     /**
      * Methoden des ArrayList definiert
      *
@@ -78,4 +85,5 @@ public class Sitzung {
         return getAktuelleLernKarte();
     }
 
+    
 }
