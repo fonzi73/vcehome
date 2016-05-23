@@ -325,11 +325,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="vor -&gt;"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVorActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnZurueck">
           <Properties>
             <Property name="text" type="java.lang.String" value="&lt;- zur&#xfc;ck"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnZurueckActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnSpeichern">
           <Properties>
@@ -349,6 +355,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="neu..."/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNeuActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
@@ -405,11 +414,17 @@
             </Property>
             <Property name="text" type="java.lang.String" value="l&#xf6;schen"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLoeschenActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnZurSeite">
           <Properties>
             <Property name="text" type="java.lang.String" value="zur Seite "/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnZurSeiteActionPerformed"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
           <AuxValues>

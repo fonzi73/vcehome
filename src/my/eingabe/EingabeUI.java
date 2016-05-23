@@ -5,17 +5,22 @@
  */
 package my.eingabe;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author fonzi
  */
 public class EingabeUI extends javax.swing.JFrame {
 
+    private boolean neuSetzen = false;
+
     /**
      * Creates new form EingabeUI
      */
     public EingabeUI() {
         session = new Sitzung();
+
         initComponents();
 
         txtAreasAntwort = new javax.swing.JTextArea[]{textAreaAntwortA,
@@ -55,12 +60,11 @@ public class EingabeUI extends javax.swing.JFrame {
 
         // Ausgabe der Themenbereiche
         for (int i = 0; i < 7; i++) {
-            if (i < session.getAktuelleLernKarte().gettBs().size()) {
-                chkBoxesThema[session.getAktuelleLernKarte().gettBs().get(i).getId() - 1].setSelected(true);
+            chkBoxesThema[i].setSelected(false);
+        }
+        for (int i = 0; i < session.getAktuelleLernKarte().gettBs().size(); i++) {
+            chkBoxesThema[session.getAktuelleLernKarte().gettBs().get(i).getId() - 1].setSelected(true);
 
-            } else {
-                
-            }
         }
 
     }
@@ -148,8 +152,18 @@ public class EingabeUI extends javax.swing.JFrame {
         });
 
         btnVor.setText("vor ->");
+        btnVor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVorActionPerformed(evt);
+            }
+        });
 
         btnZurueck.setText("<- zurück");
+        btnZurueck.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnZurueckActionPerformed(evt);
+            }
+        });
 
         btnSpeichern.setBackground(new java.awt.Color(255, 255, 102));
         btnSpeichern.setText("speichern");
@@ -161,6 +175,11 @@ public class EingabeUI extends javax.swing.JFrame {
 
         btnNeu.setBackground(new java.awt.Color(102, 255, 102));
         btnNeu.setText("neu...");
+        btnNeu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNeuActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Themengebiet");
@@ -186,8 +205,18 @@ public class EingabeUI extends javax.swing.JFrame {
 
         btnLoeschen.setBackground(new java.awt.Color(255, 102, 102));
         btnLoeschen.setText("löschen");
+        btnLoeschen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoeschenActionPerformed(evt);
+            }
+        });
 
         btnZurSeite.setText("zur Seite ");
+        btnZurSeite.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnZurSeiteActionPerformed(evt);
+            }
+        });
 
         textAreaFrage.setColumns(20);
         textAreaFrage.setRows(5);
@@ -447,7 +476,68 @@ public class EingabeUI extends javax.swing.JFrame {
     }//GEN-LAST:event_textFeldIdEingabeActionPerformed
 
     private void btnSpeichernActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSpeichernActionPerformed
-        // TODO add your handling code here:
+        if (neuSetzen == true) {
+            // Insert
+            LernKarte lK = new LernKarte(textAreaFrage.getText(), 
+                    Integer.parseInt(textFeldSchwierigkeitsgrad.getText()));
+            // 
+            ArrayList<PotentielleAntwort> pAs = new ArrayList<>();
+            for (int i = 0; i < txtAreasAntwort.length; i++) {
+                if (!txtAreasAntwort[i].getText().equals("")) {
+                    PotentielleAntwort pA = new PotentielleAntwort(
+                            txtAreasAntwort[i].getText(), 
+                            chkBoxesAntwort[i].isSelected());
+                    pAs.add(pA);
+                } else {
+                    break;
+                }
+            }
+            lK.setpAs(pAs);
+            //
+            ArrayList<ThemenBereich> tBs = new ArrayList<>();
+            for (int i = 0; i < chkBoxesThema.length; i++) {
+                if (chkBoxesThema[i].isSelected()) {
+                    ThemenBereich tB = new ThemenBereich(i + 1, 
+                            chkBoxesThema[i].getText());
+                    tBs.add(tB);
+                }
+            }
+            lK.settBs(tBs);
+            session.addLernKarte(lK);
+            neuSetzen = false;
+
+            // Update 
+        } else {
+            LernKarte lK = new LernKarte(Integer.parseInt(
+                    textFeldIdAusgabe.getText()), textAreaFrage.getText(), 
+                    Integer.parseInt(textFeldSchwierigkeitsgrad.getText()));
+            // 
+            ArrayList<PotentielleAntwort> pAs = new ArrayList<>();
+            for (int i = 0; i < txtAreasAntwort.length; i++) {
+                if (!txtAreasAntwort[i].getText().equals("")) {
+                    PotentielleAntwort pA = new PotentielleAntwort(
+                            txtAreasAntwort[i].getText(), 
+                            chkBoxesAntwort[i].isSelected(), 
+                            Integer.parseInt(textFeldIdAusgabe.getText()));
+                    pAs.add(pA);
+                } else {
+                    break;
+                }
+            }
+            lK.setpAs(pAs);
+            //
+            ArrayList<ThemenBereich> tBs = new ArrayList<>();
+            for (int i = 0; i < chkBoxesThema.length; i++) {
+                if (chkBoxesThema[i].isSelected()) {
+                    ThemenBereich tB = new ThemenBereich(i + 1, 
+                            chkBoxesThema[i].getText());
+                    tBs.add(tB);
+                }
+            }
+            lK.settBs(tBs);
+            session.setAktuelleLernKarte(lK);
+        }
+        fillFields();
     }//GEN-LAST:event_btnSpeichernActionPerformed
 
     private void textFeldSchwierigkeitsgradActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFeldSchwierigkeitsgradActionPerformed
@@ -457,6 +547,46 @@ public class EingabeUI extends javax.swing.JFrame {
     private void checkBoxJavaBasicsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxJavaBasicsActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_checkBoxJavaBasicsActionPerformed
+
+    private void btnVorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVorActionPerformed
+        session.getNextLernKarte();
+        fillFields();
+
+    }//GEN-LAST:event_btnVorActionPerformed
+
+    private void btnZurueckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnZurueckActionPerformed
+        session.getPrevLernKarte();
+        fillFields();
+    }//GEN-LAST:event_btnZurueckActionPerformed
+
+    private void btnZurSeiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnZurSeiteActionPerformed
+        session.geheZu(Integer.parseInt(textFeldIdEingabe.getText()));
+        fillFields();
+        textFeldIdEingabe.setText("");
+    }//GEN-LAST:event_btnZurSeiteActionPerformed
+
+    private void btnLoeschenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoeschenActionPerformed
+        session.removeLernKarte();
+        fillFields();
+    }//GEN-LAST:event_btnLoeschenActionPerformed
+
+    private void btnNeuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNeuActionPerformed
+        neuSetzen = true;
+        // Alle Felder leeren
+        textFeldIdAusgabe.setText("");
+        textAreaFrage.setText("");
+        textFeldSchwierigkeitsgrad.setText("");
+        // Themenbereiche leeren
+        for (int i = 0; i < 7; i++) {
+            chkBoxesThema[i].setSelected(false);
+        }
+        // Antworten und Checkboxen leeren
+        for (int i = 0; i < 8; i++) {
+            txtAreasAntwort[i].setText("");
+            chkBoxesAntwort[i].setSelected(false);
+        }
+
+    }//GEN-LAST:event_btnNeuActionPerformed
 
     /**
      * @param args the command line arguments
