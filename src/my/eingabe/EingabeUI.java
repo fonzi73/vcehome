@@ -220,6 +220,7 @@ public class EingabeUI extends javax.swing.JFrame {
 
         textAreaFrage.setColumns(20);
         textAreaFrage.setRows(5);
+        textAreaFrage.setTabSize(2);
         jScrollPane1.setViewportView(textAreaFrage);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
