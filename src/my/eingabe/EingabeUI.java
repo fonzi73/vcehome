@@ -5,6 +5,7 @@
  */
 package my.eingabe;
 
+import com.sun.glass.events.KeyEvent;
 import java.util.ArrayList;
 
 /**
@@ -134,6 +135,7 @@ public class EingabeUI extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(900, 700));
 
         checkBoxJavaBasics.setText("Java Basics");
+        checkBoxJavaBasics.setNextFocusableComponent(checkBoxWorkingWithJavaDataTypes);
         checkBoxJavaBasics.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 checkBoxJavaBasicsActionPerformed(evt);
@@ -144,7 +146,6 @@ public class EingabeUI extends javax.swing.JFrame {
         jLabel1.setText("Schwierigkeitsgrad:");
 
         textFeldSchwierigkeitsgrad.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        textFeldSchwierigkeitsgrad.setText("0");
         textFeldSchwierigkeitsgrad.setName(""); // NOI18N
         textFeldSchwierigkeitsgrad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -153,6 +154,7 @@ public class EingabeUI extends javax.swing.JFrame {
         });
 
         btnVor.setText("vor ->");
+        btnVor.setNextFocusableComponent(btnZurueck);
         btnVor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVorActionPerformed(evt);
@@ -160,6 +162,7 @@ public class EingabeUI extends javax.swing.JFrame {
         });
 
         btnZurueck.setText("<- zurück");
+        btnZurueck.setNextFocusableComponent(btnVor);
         btnZurueck.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnZurueckActionPerformed(evt);
@@ -168,6 +171,7 @@ public class EingabeUI extends javax.swing.JFrame {
 
         btnSpeichern.setBackground(new java.awt.Color(255, 255, 102));
         btnSpeichern.setText("speichern");
+        btnSpeichern.setNextFocusableComponent(btnVor);
         btnSpeichern.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSpeichernActionPerformed(evt);
@@ -176,6 +180,7 @@ public class EingabeUI extends javax.swing.JFrame {
 
         btnNeu.setBackground(new java.awt.Color(102, 255, 102));
         btnNeu.setText("neu...");
+        btnNeu.setNextFocusableComponent(btnSpeichern);
         btnNeu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNeuActionPerformed(evt);
@@ -191,18 +196,29 @@ public class EingabeUI extends javax.swing.JFrame {
                 textFeldIdEingabeActionPerformed(evt);
             }
         });
+        textFeldIdEingabe.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                textFeldIdEingabeKeyPressed(evt);
+            }
+        });
 
         checkBoxWorkingWithJavaDataTypes.setText("Working with Java data types");
+        checkBoxWorkingWithJavaDataTypes.setNextFocusableComponent(checkBoxMethodsAndEncapsulation);
 
         checkBoxMethodsAndEncapsulation.setText("Methods and Encapsulation");
+        checkBoxMethodsAndEncapsulation.setNextFocusableComponent(checkBoxStringStringBuilderArraysAndArrayList);
 
         checkBoxStringStringBuilderArraysAndArrayList.setText("<html>String, StringBuilder, Arrays<br>\nand ArrayList</html>");
+        checkBoxStringStringBuilderArraysAndArrayList.setNextFocusableComponent(checkBoxFlowControl);
 
         checkBoxFlowControl.setText("Flow Control");
+        checkBoxFlowControl.setNextFocusableComponent(checkBoxWorkingWithInheritance);
 
         checkBoxWorkingWithInheritance.setText("Working with inheritance");
+        checkBoxWorkingWithInheritance.setNextFocusableComponent(checkBoxExceptionHandling);
 
         checkBoxExceptionHandling.setText("Exception handling");
+        checkBoxExceptionHandling.setNextFocusableComponent(checkBoxJavaBasics);
 
         btnLoeschen.setBackground(new java.awt.Color(255, 102, 102));
         btnLoeschen.setText("löschen");
@@ -232,7 +248,10 @@ public class EingabeUI extends javax.swing.JFrame {
 
         textAreaAntwortG.setColumns(20);
         textAreaAntwortG.setRows(5);
+        textAreaAntwortG.setTabSize(2);
         jScrollPane2.setViewportView(textAreaAntwortG);
+
+        checkBoxAntwortG.setNextFocusableComponent(checkBoxAntwortH);
 
         textFeldIdAusgabe.setEditable(false);
         textFeldIdAusgabe.setBackground(new java.awt.Color(204, 255, 255));
@@ -244,31 +263,52 @@ public class EingabeUI extends javax.swing.JFrame {
 
         textAreaAntwortF.setColumns(20);
         textAreaAntwortF.setRows(5);
+        textAreaAntwortF.setTabSize(2);
         jScrollPane6.setViewportView(textAreaAntwortF);
+
+        checkBoxAntwortF.setNextFocusableComponent(checkBoxAntwortG);
 
         textAreaAntwortE.setColumns(20);
         textAreaAntwortE.setRows(5);
+        textAreaAntwortE.setTabSize(2);
         jScrollPane7.setViewportView(textAreaAntwortE);
+
+        checkBoxAntwortE.setNextFocusableComponent(checkBoxAntwortF);
 
         textAreaAntwortD.setColumns(20);
         textAreaAntwortD.setRows(5);
+        textAreaAntwortD.setTabSize(2);
         jScrollPane8.setViewportView(textAreaAntwortD);
+
+        checkBoxAntwortD.setNextFocusableComponent(checkBoxAntwortE);
 
         textAreaAntwortC.setColumns(20);
         textAreaAntwortC.setRows(5);
+        textAreaAntwortC.setTabSize(2);
         jScrollPane9.setViewportView(textAreaAntwortC);
+
+        checkBoxAntwortC.setNextFocusableComponent(checkBoxAntwortD);
+
+        checkBoxAntwortB.setNextFocusableComponent(checkBoxAntwortC);
 
         textAreaAntwortB.setColumns(20);
         textAreaAntwortB.setRows(5);
+        textAreaAntwortB.setTabSize(2);
         jScrollPane10.setViewportView(textAreaAntwortB);
+
+        checkBoxAntwortA.setNextFocusableComponent(checkBoxAntwortB);
 
         textAreaAntwortA.setColumns(20);
         textAreaAntwortA.setRows(5);
+        textAreaAntwortA.setTabSize(2);
         jScrollPane11.setViewportView(textAreaAntwortA);
 
         textAreaAntwortH.setColumns(20);
         textAreaAntwortH.setRows(5);
+        textAreaAntwortH.setTabSize(2);
         jScrollPane3.setViewportView(textAreaAntwortH);
+
+        checkBoxAntwortH.setNextFocusableComponent(checkBoxAntwortA);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -323,7 +363,7 @@ public class EingabeUI extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(btnZurueck, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnVor, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(btnSpeichern, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -334,11 +374,11 @@ public class EingabeUI extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(textFeldIdEingabe, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(textFeldIdEingabe, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(11, 11, 11)
                                         .addComponent(jLabel5)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(textFeldIdAusgabe, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(textFeldIdAusgabe, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(btnNeu, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel2)
                             .addComponent(checkBoxExceptionHandling)
@@ -352,7 +392,7 @@ public class EingabeUI extends javax.swing.JFrame {
                                 .addComponent(textFeldSchwierigkeitsgrad, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(checkBoxWorkingWithInheritance)))
                     .addComponent(checkBoxStringStringBuilderArraysAndArrayList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -460,8 +500,8 @@ public class EingabeUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 881, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 891, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -577,7 +617,7 @@ public class EingabeUI extends javax.swing.JFrame {
         // Alle Felder leeren
         textFeldIdAusgabe.setText("");
         textAreaFrage.setText("");
-        textFeldSchwierigkeitsgrad.setText("");
+        textFeldSchwierigkeitsgrad.setText("0");
         // Themenbereiche leeren
         for (int i = 0; i < 7; i++) {
             chkBoxesThema[i].setSelected(false);
@@ -589,6 +629,14 @@ public class EingabeUI extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnNeuActionPerformed
+
+    private void textFeldIdEingabeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textFeldIdEingabeKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            session.geheZu(Integer.parseInt(textFeldIdEingabe.getText()));
+            fillFields();
+            textFeldIdEingabe.setText("");
+        }
+    }//GEN-LAST:event_textFeldIdEingabeKeyPressed
 
     /**
      * @param args the command line arguments
