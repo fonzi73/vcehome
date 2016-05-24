@@ -66,7 +66,7 @@ public class LernKarte2ThemenBereich {
     public static ArrayList<ThemenBereich> getAllThemenByLernKarte(LernKarte lK) {
         ArrayList<ThemenBereich> tBs = new ArrayList<>();
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://192.168.2.3:3306/vcetrainer", "Petra", "Panke");
             String sql = "SELECT * FROM lernkarte2themenbereich WHERE lernkarte_id=?";
             pst = con.prepareStatement(sql);
             pst.setInt(1, lK.getId());
@@ -103,7 +103,7 @@ public class LernKarte2ThemenBereich {
 
     public static void insert(LernKarte2ThemenBereich lK2TB) {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://192.168.2.3:3306/vcetrainer", "Petra", "Panke");
             pst = con.prepareStatement("INSERT INTO lernkarte2themenbereich VALUES (null, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS); // ID Ausgeben
             pst.setInt(1, lK2TB.getLernKarte_id());
             pst.setInt(2, lK2TB.getThemenBereich_id());
@@ -136,7 +136,7 @@ public class LernKarte2ThemenBereich {
 
     public static void delete(LernKarte lK) {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://192.168.2.3:3306/vcetrainer", "Petra", "Panke");
             // Prepared Statement
             String sql = "DELETE FROM lernkarte2themenbereich WHERE lernkarte_id=?";
             pst = con.prepareStatement(sql);

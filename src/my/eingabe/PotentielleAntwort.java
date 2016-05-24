@@ -86,7 +86,7 @@ public class PotentielleAntwort {
      public static ArrayList<PotentielleAntwort> getAllByLernkarte(LernKarte lK) {
         ArrayList<PotentielleAntwort> pAs = new ArrayList<>();
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://192.168.2.3:3306/vcetrainer", "Petra", "Panke");
             String sql = "SELECT * FROM potentielleantwort WHERE lernkarte_id=?";
             pst = con.prepareStatement(sql);
             pst.setInt(1, lK.getId());
@@ -120,7 +120,7 @@ public class PotentielleAntwort {
     }
     public static void insert(PotentielleAntwort pA) {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://192.168.2.3:3306/vcetrainer", "Petra", "Panke");
             pst = con.prepareStatement("INSERT INTO potentielleantwort VALUES (null, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS); // ID Ausgeben
             pst.setString(1, String.valueOf(pA.isRichtigkeit())); // db erwartet String in ENUM-Feld
             pst.setString(2, pA.getAntwort());
@@ -159,7 +159,7 @@ public class PotentielleAntwort {
     */
     public static void delete(PotentielleAntwort pA) {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://192.168.2.3:3306/vcetrainer", "Petra", "Panke");
             // Prepared Statement
             String sql = "DELETE FROM potentielleantwort WHERE lernkarte_id=?";
             pst = con.prepareStatement(sql);
@@ -184,7 +184,7 @@ public class PotentielleAntwort {
     
     public static void delete(LernKarte lK) {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vcetrainer", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://192.168.2.3:3306/vcetrainer", "Petra", "Panke");
             // Prepared Statement
             String sql = "DELETE FROM potentielleantwort WHERE lernkarte_id=?";
             pst = con.prepareStatement(sql);
