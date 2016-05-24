@@ -144,6 +144,7 @@ public class EingabeUI extends javax.swing.JFrame {
         jLabel1.setText("Schwierigkeitsgrad:");
 
         textFeldSchwierigkeitsgrad.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        textFeldSchwierigkeitsgrad.setText("0");
         textFeldSchwierigkeitsgrad.setName(""); // NOI18N
         textFeldSchwierigkeitsgrad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
